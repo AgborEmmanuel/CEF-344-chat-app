@@ -48,18 +48,6 @@ router.get('/cookie',(req,res)=>{
 router.get("/home",(req,res)=>{
     res.send('<a href="/auth/google">Login with google</a>')
 })
-router.get('/auth/google',
-  passport.authenticate('google', { scope: ['email','profile'] }));
-
-router.get('/auth/google/callback', 
-  passport.authenticate('google', { session:false,failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
-
-router.get("/auth",(req,res)=>{
-    res.send("Reached")
-})
 router.post('/getUsers',isAuthenticated,getUsers)
 router.post("/Register",register)
 router.post("/Login",login)
