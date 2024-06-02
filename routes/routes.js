@@ -6,7 +6,12 @@ const {register,login,logout,getTasks,addNewTask,deleteTask,getUsers}=require('.
 const multer=require('multer')
 
 const isAuthenticated=(req,res,next)=>{
-    const token=req.cookies.hooli
+    let token=req.cookies.hooli
+    if(req.body.token){
+      if(!token){
+        token=req.body.token
+      }
+    }
     if(token){
        jwt.verify(token,process.env.Secret,(err,decodedtoken)=>{
           if(err){
@@ -55,7 +60,7 @@ router.get('/auth/google/callback',
 router.get("/auth",(req,res)=>{
     res.send("Reached")
 })
-router.get('/getUsers',isAuthenticated,getUsers)
+router.post('/getUsers',isAuthenticated,getUsers)
 router.post("/Register",register)
 router.post("/Login",login)
 router.get("/logout",logout)

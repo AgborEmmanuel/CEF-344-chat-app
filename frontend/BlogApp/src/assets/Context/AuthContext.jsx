@@ -31,20 +31,24 @@ const AuthContextProvider = (props) => {
     }
     useEffect(()=>{
         fetch('http://localhost:5000/getUsers',{
-            credentials:'include'
+            credentials:'include',
+            method:'POST',
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({token:userState.token})
         })
         .then(res=>{
             if(res.ok) return res.json()
             throw Error("Error. Couldn't check user state")
         })
         .then(data=>{
-            console.log(data.Users)
             setUsers(data.Users)
         })
         .catch(error=>{
             console.log(error)
         })
-    },[])
+    },[userState.isLoggedIn])
     return ( 
         <AuthContext.Provider value={{userState,updateState,users}}>
             {props.children}

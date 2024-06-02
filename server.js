@@ -38,10 +38,9 @@ const io=socketio(server,{
 //     },
 // })
 io.on('connection',socket=>{
-    console.log(socket.id)
     socket.on("send_message",(data)=>{
         console.log(data)
-        socket.broadcast.emit("receive_message",data)
+        socket.broadcast.emit("receive_message",data,{dataId:socket.id})
     })
     socket.on('disconnect',()=>{
         console.log("User has left!!!")

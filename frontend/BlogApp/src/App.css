@@ -65,6 +65,9 @@ a:hover{
     border-radius: 10px;
     border-top-right-radius: 1px;
 }
+.sender-name,.sender-time{
+    font-size:x-small;
+}
 /* .bg-1{
     background-color: var(--bg-1);
 }
