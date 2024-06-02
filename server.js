@@ -10,7 +10,7 @@ const auth=require('./controller/google-auth')
 const http=require('http')
 const socketio=require('socket.io')
 const server=http.createServer(app)
-// const {Server}=require('socket.io')
+
 
 mongoose.connect(process.env.mongoURI).then(()=>{
     console.log("Connected to db succesfully")
@@ -32,11 +32,6 @@ const io=socketio(server,{
         origin:['http://127.0.0.1:5173','http://localhost:5173'], 
     }
 })
-// const io=new Server(4000,{
-//     cors:{
-//         origin:['http://127.0.0.1:5173','http://localhost:5173'], 
-//     },
-// })
 io.on('connection',socket=>{
     socket.on("send_message",(data)=>{
         console.log(data)
@@ -52,11 +47,6 @@ app.use(router)
 app.use('/*',(req,res)=>{
     res.sendFile('index.html',{root:'./frontend/BlogApp/dist'})
 })
-
-
-// app.listen(5000,()=>{
-//     console.log("Server is listening on port 5000")
-// })
 server.listen(5000,()=>{
     console.log("Server is listening on port 5000")
 })
