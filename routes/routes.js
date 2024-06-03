@@ -5,6 +5,7 @@ const jwt=require('jsonwebtoken')
 const {register,login,logout,getTasks,addNewTask,deleteTask,getUsers}=require('../controller/controller')
 const multer=require('multer')
 
+//to check if user is authenticated
 const isAuthenticated=(req,res,next)=>{
     let token=req.cookies.hooli
     if(req.body.token){
@@ -36,25 +37,22 @@ const storage=multer.diskStorage({
       cb(null,file.originalname)
   }
 })
+
+//function to upload photos
 const upload=multer({storage:storage})
 
-router.get('/cookie',(req,res)=>{
-    console.log("//////")
-    console.log(req.cookies.authApp)
-    console.log("//////")
-    res.cookie("authApp",req.cookies.authApp,{maxAge:1000*3600*24})
-    res.json({Message:req.cookies})
-})
 router.get("/home",(req,res)=>{
     res.send('<a href="/auth/google">Login with google</a>')
 })
 router.post('/getUsers',isAuthenticated,getUsers)
+//route to register users
 router.post("/Register",register)
+//route to login users
 router.post("/Login",login)
+//route to logout users
 router.get("/logout",logout)
 router.get("/task/getTasks/:id",getTasks)
 router.post("/task/add/:id",upload.single('image'),addNewTask)
-// router.patch("/task/:id",updateTask)
 router.post("/task/delete/:id",deleteTask)
 
 
